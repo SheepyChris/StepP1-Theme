@@ -20,7 +20,7 @@ end;
 -----------------------------------------------------------------------------------------------
 
 t[#t+1] = LoadActor( THEME:GetPathG("","ScreenSystemLayer/STEPP1") )..{
-	InitCommand=cmd(x,SCREEN_CENTER_X;y,SCREEN_HEIGHT-14;blend,'BlendMode_Add';zoom,.8);
+	InitCommand=cmd(x,SCREEN_CENTER_X;y,SCREEN_HEIGHT-14;zoom,.8);
 	ScreenChangedMessageCommand=cmd(ShowIfCreditsAreInScreen);
 };
 

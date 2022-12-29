@@ -2,7 +2,7 @@ local t = Def.ActorFrame {
 	GoNextScreenMessageCommand=cmd(playcommand,'Off');
 };
 
-local init_pos = 112;
+local init_pos = 133;
 local delta = 23;
 
 -- Tick sound

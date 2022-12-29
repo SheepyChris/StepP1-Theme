@@ -2,7 +2,7 @@ local t = Def.ActorFrame {
 	GoNextScreenMessageCommand=cmd(playcommand,'Off');
 };
 
-local init_pos = 114;
+local init_pos = 134;
 local delta = 23;
 local init_sleep = 0.05;
 
@@ -73,16 +73,23 @@ t[#t+1] = LoadActor( "_scores.lua" )..{
 
 
 -- Dance grade text
+
+t[#t+1] = LoadActor( THEME:GetPathG("","ScreenEvaluation/_shadoww.png") )..{
+	InitCommand=cmd(basezoom,.66);
+	OnCommand=cmd(x,SCREEN_CENTER_X;y,67;rotationx,90;sleep,0;linear,.25;rotationx,0);
+	OffCommand=cmd(finishtweening;y,66;linear,.4;y,-28);
+};
+
 t[#t+1] = LoadActor( THEME:GetPathG("","ScreenEvaluation/_shadow.png") )..{
 	InitCommand=cmd(basezoom,.66);
-	OnCommand=cmd(x,SCREEN_CENTER_X;y,66;rotationx,90;sleep,0;linear,.25;rotationx,0);
-	OffCommand=cmd(finishtweening;y,66;linear,.2;y,-28);
+	OnCommand=cmd(x,SCREEN_CENTER_X;y,87;rotationx,90;sleep,0;linear,.25;rotationx,0);
+	OffCommand=cmd(finishtweening;y,66;linear,.4;y,-28);
 };
 
 t[#t+1] = LoadActor( THEME:GetPathG("","ScreenEvaluation/_dance_grade.png") )..{
 	InitCommand=cmd(basezoom,.66);
 	OnCommand=cmd(x,SCREEN_CENTER_X;y,-50;linear,.25;y,44);
-	OffCommand=cmd(finishtweening;y,44;linear,.2;y,-50);
+	OffCommand=cmd(finishtweening;y,44;linear,.4;y,-50);
 };
 
 -- Stage Break star
@@ -118,9 +125,15 @@ t[#t+1] = LoadActor( THEME:GetPathG("","ScreenEvaluation/STAR") )..{
 };
 end;
 
+-- Machine name (TODO: Allow changes from a .txt file)
+t[#t+1] = LoadFont("_myriad pro 20px")..{
+	OnCommand=cmd(y,66;x,SCREEN_CENTER_X;zoom,.66;shadowlength,0;maxwidth,440;diffuse,0,1,1,1;settext,"StepP1");
+	OffCommand=cmd(stoptweening;visible,false);
+}
+
 -- Song title
 t[#t+1] = LoadFont("_myriad pro 20px")..{
-	OnCommand=cmd(y,64;x,SCREEN_CENTER_X;zoom,.66;shadowlength,0;maxwidth,440;diffuse,0,1,1,1;settext,GAMESTATE:GetCurrentSong():GetDisplayMainTitle());
+	OnCommand=cmd(y,86;x,SCREEN_CENTER_X;zoom,.66;shadowlength,0;maxwidth,440;diffuse,0,1,1,1;settext,GAMESTATE:GetCurrentSong():GetDisplayMainTitle());
 	OffCommand=cmd(stoptweening;visible,false);
 }
 

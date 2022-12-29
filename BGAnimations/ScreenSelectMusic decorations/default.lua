@@ -82,6 +82,9 @@ t[#t+1] = LoadActor("_diffbar_full")..{
 	TimerOutSelectingSongCommand=cmd(stoptweening;diffusealpha,1;sleep,.05;linear,.2;y,320;diffusealpha,0);
 }
 
+--SCORE GRADES
+t[#t+1] = LoadActor("_grades") .. {}
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 --PRESS CENTER STEP

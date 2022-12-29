@@ -174,6 +174,36 @@ function IsNewStepByGroupCondition()
 end;
 ]]--
 
+local GradeLetters = { 
+	["Grade_Tier01"] = "SSS", 
+	["Grade_Tier02"] = "X", 
+	["Grade_Tier03"] = "G", 
+	["Grade_Tier04"] = "A", 
+	["Grade_Tier05"] = "B", 
+	["Grade_Tier06"] = "C", 
+	["Grade_Tier07"] = "D", 
+	["Grade_Tier08"] = "F" 
+}
+
+local function GetPersonalGrade(pn, i)
+	if GAMESTATE:IsSideJoined(pn) and GAMESTATE:HasProfile(pn) and aSteps[i] then
+		local HighScores = PROFILEMAN:GetProfile(pn):GetHighScoreList(GAMESTATE:GetCurrentSong(), aSteps[i]):GetHighScores()
+		if #HighScores ~= 0 then
+			local GradeTier = HighScores[1]:GetGrade()
+			local Grade = (GradeTier == "Grade_Failed" and "F" or GradeLetters[GradeTier])
+			if Grade == "G" and HighScores[1]:GetTapNoteScore('TapNoteScore_W5') > 0 then
+				return "S"
+			else
+				return Grade
+			end
+		else
+			return nil
+		end
+	else
+		return nil
+	end
+end
+
 --//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 --//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -190,7 +220,7 @@ end]]
 
 local Xpos = {}
 for i=1,iChartsToShow do
-	Xpos[i] = -377+(i-1)*63;
+	Xpos[i] = -377.8+(i-1)*63;
 end
 
 for i=1,iChartsToShow do
@@ -215,23 +245,53 @@ for i=1,iChartsToShow do
 	
 	-- Meters --
 	t[#t+1] = LoadFont("N_SINGLE_N") .. {
-		InitCommand=cmd(x,Xpos[i]);
+		InitCommand=cmd(x,Xpos[i]+1;y,-1);
 		UpDateCommand=cmd( SetMeterValue,i,0 );
 	};
 	
 	t[#t+1] = LoadFont("N_SINGLE_P") .. {
-		InitCommand=cmd(x,Xpos[i]);
+		InitCommand=cmd(x,Xpos[i]+1;y,-1);
 		UpDateCommand=cmd( SetMeterValue,i,2 );
 	};
 	
 	t[#t+1] = LoadFont("N_DOUBLE_N") .. {
-		InitCommand=cmd(x,Xpos[i]);
+		InitCommand=cmd(x,Xpos[i]+1;y,-1);
 		UpDateCommand=cmd( SetMeterValue,i,1 );
 	};
 	
 	t[#t+1] = LoadFont("N_DOUBLE_P") .. {
-		InitCommand=cmd(x,Xpos[i]);
+		InitCommand=cmd(x,Xpos[i]+1;y,-1);
 		UpDateCommand=cmd( SetMeterValue,i,3 );
+	};
+	
+	-- Top Rank
+	t[#t+1] = Def.Sprite {
+		Name="RankP1";
+		Texture=THEME:GetPathG("", "RecordGrades/R_F (doubleres).png");
+		InitCommand=cmd(x,Xpos[i];y,-30;zoom,0.65);
+		UpDateCommand=function(self)
+			local Grade = GetPersonalGrade(PLAYER_1, i)
+			if Grade ~= nil then
+				self:Load(THEME:GetPathG("", "RecordGrades/R_" .. Grade .. " (doubleres).png"))
+			else
+				self:Load(nil)
+			end
+		end;
+	};
+	
+	-- Bottom Rank
+	t[#t+1] = Def.Sprite {
+		Name="RankP2";
+		Texture=THEME:GetPathG("", "RecordGrades/R_F (doubleres).png");
+		InitCommand=cmd(x,Xpos[i];y,29;zoom,0.65);
+		UpDateCommand=function(self)
+			local Grade = GetPersonalGrade(PLAYER_2, i)
+			if Grade ~= nil then
+				self:Load(THEME:GetPathG("", "RecordGrades/R_" .. Grade .. " (doubleres).png"))
+			else
+				self:Load(nil)
+			end
+		end;
 	};
 	
 	-- Labels --

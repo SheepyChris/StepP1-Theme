@@ -53,9 +53,9 @@ if (GAMESTATE:IsSideJoined(PLAYER_1) and not GAMESTATE:IsSideJoined(PLAYER_2)) o
 			elseif num == 5 then text = text .. "C";
 			else text = text .. "XX"; end;
 			
-			if GAMESTATE:GetCurrentSteps(PLAYER_1):GetMeter() == 99 then
+			if GAMESTATE:GetCurrentSteps(pn):GetMeter() == 99 then
 				text = text .. "??";
-			elseif GAMESTATE:GetCurrentSteps(PLAYER_1):GetMeter() > 99 then
+			elseif GAMESTATE:GetCurrentSteps(pn):GetMeter() > 99 then
 				text = text .."+99";
 			else
 				text = text .. tostring(GAMESTATE:GetCurrentSteps(pn):GetMeter());
